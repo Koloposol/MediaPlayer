@@ -28,8 +28,7 @@ namespace MediaPlayer
 
         private void открытьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
-                return;
+            
             string file = openFileDialog1.FileName;
             Text = file;
 
