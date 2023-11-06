@@ -102,5 +102,35 @@ namespace MediaPlayer
         {
             
         }
+
+        private void axWindowsMediaPlayer1_PlayStateChange(object sender, _WMPOCXEvents_PlayStateChangeEvent e)
+        {
+            timer1.Enabled = true;
+            timer1.Interval = 1000;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            trackBar1.Maximum = Convert.ToInt32(axWindowsMediaPlayer1.currentMedia.duration);
+            trackBar1.Value = Convert.ToInt32(axWindowsMediaPlayer1.Ctlcontrols.currentPosition);
+
+            if (axWindowsMediaPlayer1 != null)
+            {
+                int seconds = (int)axWindowsMediaPlayer1.Ctlcontrols.currentPosition;
+                int hours = seconds / 3600;
+                int minutes = (seconds - (hours * 3600)) / 60;
+                seconds = seconds - (hours * 3600 + minutes * 60);
+                label1.Text = String.Format($"{hours}:{minutes}:{seconds}");
+            }
+            else
+            {
+                label1.Text = "0:00:00";
+            }
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            axWindowsMediaPlayer1.Ctlcontrols.currentPosition = trackBar1.Value;
+        }
     }
 }
